@@ -1,13 +1,13 @@
 import 'dart:async';
 import 'dart:math';
 
-
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_snake_game/main_menu.dart';
 import 'package:flutter_snake_game/problem.dart';
 import 'package:flutter_snake_game/sound_manager.dart';
+import 'package:confetti/confetti.dart';
 
 
 import 'control_panel.dart';
@@ -18,9 +18,10 @@ import 'piece.dart';
 
 class GamePage extends StatefulWidget {
   final String type;
+  final int level;
 
 
-  GamePage(this.type);
+  GamePage(this.type, this.level);
 
   @override
   _GamePageState createState() => _GamePageState();
@@ -32,6 +33,8 @@ class _GamePageState extends State<GamePage> {
   int length = 10;
   int step = 40;
   Direction direction = Direction.right;
+  ConfettiController _controllerConfetti;
+
 
   List<Piece> foods = [];
   List<Offset> foodsPosition = [];
@@ -209,7 +212,7 @@ class _GamePageState extends State<GamePage> {
     List<Problem> tempProblems = [];
 
     for (int i = 0; i < foodsPosition.length; i++) {
-      tempProblems.add(Problem(widget.type).generateProblem());
+      tempProblems.add(Problem(widget.type).generateProblem((widget.level)));
     }
     return tempProblems;
   }
@@ -244,6 +247,8 @@ class _GamePageState extends State<GamePage> {
       if (foodsPosition[i] == positions[0]) {
         if(isAnswerCorrect(foods[i])){
           _soundManager.playCorrectAnswerSound();
+          _controllerConfetti.play();
+
           prevFoodColor = foods[i].color;
           shadowColor = getShadowColor();
           changeColor = true;
@@ -340,36 +345,45 @@ class _GamePageState extends State<GamePage> {
     });
   }
 
-  Widget getScore() {
+  Widget getScore(double screenWidth, double screenHeight) {
+    print (1);
     return Positioned(
-      top: 50.0,
-      right: 40.0,
-      child: Stack(
-        children: <Widget>[
-          // Stroked text as border.
-          Text(
-            "Score: " + score.toString(),
-            style: TextStyle(
-              fontSize: 40,
-              foreground: Paint()
-                ..style = PaintingStyle.stroke
-                ..strokeWidth = 6
-                ..color = Colors.blue[700],
+
+      left: screenWidth / 2 - 100 ,
+      child: Container (
+        width: 150,
+        height: 100,
+        alignment: AlignmentDirectional.topCenter,
+        // decoration: BoxDecoration(
+        //     image: DecorationImage(
+        //       image: AssetImage('assets/images/scoreBoard1.png'),
+        //       fit: BoxFit.fill,
+        //     )
+        // ),
+        child: Stack(
+          children: <Widget>[
+            // Stroked text as border.
+            Container(
+              margin: EdgeInsets.only(top: 10),
+              child: Text(
+                score.toString(),
+                style: TextStyle (
+                  fontSize: 50,
+                  // foreground: Paint()
+                  //   ..style = PaintingStyle.stroke
+                  //   ..strokeWidth = 2
+                  //   ..color = Colors.white,
+                  color: Colors.white,
+                ),
+                textAlign: TextAlign.center,
+              ),
             ),
-          ),
-          // Solid text as fill.
-          Text(
-            "Score: " + score.toString(),
-            style: TextStyle(
-              fontSize: 40,
-              color: Colors.grey[300],
-            ),
-          ),
-        ],
+            // Solid text as fill.
+
+          ],
+        ),
       ),
     );
-
-
   }
 
   String getProblemStringByType(){
@@ -386,37 +400,26 @@ class _GamePageState extends State<GamePage> {
 
 
     if(widget.type == 'add'){
-      return "Problem to solve: $x + $y";
+      return "$x + $y";
     }
     else if(widget.type == 'mult'){
-      return "Problem to solve: $x x $y";
+      return "$x x $y";
     }
-    return "Problem to solve: $x + $y";
+    return "$x + $y";
   }
 
   Widget getProblem() {
-    return Positioned(
-      top: 50.0,
-      left: 40.0,
+    double width = MediaQuery.of(context).size.width;
+
+    return Center(
       child: Stack(
         children: <Widget>[
           // Stroked text as border.
           Text(
-            getProblemStringByType() ,
-            style: TextStyle(
-              fontSize: 40,
-              foreground: Paint()
-                ..style = PaintingStyle.stroke
-                ..strokeWidth = 6
-                ..color = Colors.blue[700],
-            ),
-          ),
-          // Solid text as fill.
-          Text(
             getProblemStringByType(),
             style: TextStyle(
-              fontSize: 40,
-              color: Colors.grey[300],
+              fontSize: width * 0.1,
+              color: Colors.grey[50].withOpacity(0.3),
             ),
           ),
         ],
@@ -446,7 +449,7 @@ class _GamePageState extends State<GamePage> {
           border: Border.all(
             color: Colors.black.withOpacity(0.2),
             style: BorderStyle.solid,
-            width: 1.0,
+            width: 5.0,
           ),
         ),
       ),
@@ -458,6 +461,8 @@ class _GamePageState extends State<GamePage> {
   void initState() {
     super.initState();
     _soundManager.playBackgroundMusic();
+    _controllerConfetti =
+        ConfettiController(duration: const Duration(seconds: 1));
     restart();
   }
 
@@ -559,10 +564,11 @@ class _GamePageState extends State<GamePage> {
     screenWidth = MediaQuery.of(context).size.width;
     screenHeight = MediaQuery.of(context).size.height;
 
-    lowerBoundX = step;
-    lowerBoundY = step;
-    upperBoundX = roundToNearestTens(screenWidth.toInt() - step);
-    upperBoundY = roundToNearestTens(screenHeight.toInt() - step);
+    lowerBoundX = 2*step;
+    lowerBoundY = 2*step;
+    upperBoundX = roundToNearestTens(screenWidth.toInt() - 3*step);
+    upperBoundY = roundToNearestTens(screenHeight.toInt() - 3*step);
+
 
     return Scaffold(
       body: Container(
@@ -583,13 +589,72 @@ class _GamePageState extends State<GamePage> {
             foods[0],
             foods[1],
             foods[2],
-            getControls(),
-            getScore(),
+            confetti(Alignment.centerRight, pi),
+            confetti(Alignment.centerLeft ,0),
+            //getControls(),
+            getScore(screenWidth, screenHeight),
             getProblem(),
             getKeyboardControls(context)
           ],
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _controllerConfetti.dispose();
+    super.dispose();
+  }
+
+  Widget confetti(Alignment alignment, double direction) {
+    return Align(
+      alignment: alignment,
+      child: ConfettiWidget(
+        confettiController: _controllerConfetti,
+        blastDirection: direction, // radial value - LEFT
+        particleDrag: 0.05, // apply drag to the confetti
+        emissionFrequency: 0.05, // how often it should emit
+        numberOfParticles: 20, // number of particles to emit
+        gravity: 0.05, // gravity - or fall speed
+        shouldLoop: false,
+        colors: const [
+          Colors.yellowAccent,
+          Colors.blue,
+          Colors.pink,
+          Colors.orange,
+          Colors.purple
+        ],
+        createParticlePath: drawStar,// manually specify the colors to be used
+        //strokeWidth: 1,
+        //strokeColor: Colors.white,
+      ),
+    );
+  }
+
+
+  /// A custom Path to paint stars.
+  Path drawStar(Size size) {
+    // Method to convert degree to radians
+    double degToRad(double deg) => deg * (pi / 180.0);
+
+    const numberOfPoints = 5;
+    final halfWidth = size.width / 2;
+    final externalRadius = halfWidth;
+    final internalRadius = halfWidth / 2.5;
+    final degreesPerStep = degToRad(360 / numberOfPoints);
+    final halfDegreesPerStep = degreesPerStep / 2;
+    final path = Path();
+    final fullAngle = degToRad(360);
+    path.moveTo(size.width, halfWidth);
+
+    for (double step = 0; step < fullAngle; step += degreesPerStep) {
+      path.lineTo(halfWidth + externalRadius * cos(step),
+          halfWidth + externalRadius * sin(step));
+      path.lineTo(halfWidth + internalRadius * cos(step + halfDegreesPerStep),
+          halfWidth + internalRadius * sin(step + halfDegreesPerStep));
+    }
+    path.close();
+    return path;
   }
 }

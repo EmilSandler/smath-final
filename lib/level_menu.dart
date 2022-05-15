@@ -14,25 +14,26 @@ class LevelMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
 
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("assets/images/background.jpg"),
-            fit: BoxFit.cover,
+            image: AssetImage("assets/images/edenGarden.png"),
+            fit: BoxFit.fill,
           ),
         ),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Padding(padding: EdgeInsets.symmetric(vertical: 50.0),
+              Padding(padding: EdgeInsets.symmetric(vertical: 50.0),
                 child: Text(
                     'Choose Level',
                     style: TextStyle(
                       fontFamily: 'SnakeFont',
-                      fontSize: 200.0,
+                      fontSize: width * 0.07,
                       color: Colors.deepOrangeAccent,
                       shadows: [
                         Shadow(
