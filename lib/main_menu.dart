@@ -44,9 +44,10 @@ class MainMenu extends StatelessWidget {
                 width: MediaQuery.of(context).size.width / 4,
                 child: ElevatedButton(
                   style: ButtonStyle(
-                      overlayColor: MaterialStateProperty.all(Colors.red),
-                      shape: MaterialStateProperty.all(CircleBorder(),),
-                      padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(10)),
+                      shape: MaterialStateProperty.all(CircleBorder()),
+                      backgroundColor: MaterialStateProperty.all(Colors.transparent),
+                      overlayColor: MaterialStateProperty.all(Color.fromARGB(50, 0, 0, 255)),
+                      padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(20)),
                       elevation: MaterialStateProperty.all<double>(50)
                   ),
                   onPressed: () {
@@ -58,18 +59,21 @@ class MainMenu extends StatelessWidget {
                       ),
                     );
                   },
-                  child: Text('+',
+                  child: Tooltip(
+                    message: 'ADDITION',
+                    child: Text('+',
                       style: TextStyle(fontSize: 60)
-                  ),
+                  ),),
                 ),
               ),
               SizedBox(
                 width: MediaQuery.of(context).size.width / 4,
                 child: ElevatedButton(
                   style: ButtonStyle(
-                      overlayColor: MaterialStateProperty.all(Colors.red),
-                      shape: MaterialStateProperty.all(CircleBorder(),),
-                      padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(10)),
+                      shape: MaterialStateProperty.all(CircleBorder()),
+                      backgroundColor: MaterialStateProperty.all(Colors.transparent),
+                      overlayColor: MaterialStateProperty.all(Color.fromARGB(50, 0, 0, 255)),
+                      padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(20)),
                       elevation: MaterialStateProperty.all<double>(50)
                   ),
                   onPressed: () {
@@ -81,9 +85,11 @@ class MainMenu extends StatelessWidget {
                       ),
                     );
                   },
-                  child: Text('X',
-                      style: TextStyle(fontSize: 60)
-                  ),
+                  child: Tooltip(
+                    message: 'MULTIPLICATION',
+                    child: Text('X',
+                        style: TextStyle(fontSize: 60)
+                    ),),
                 ),
               ),
             ],

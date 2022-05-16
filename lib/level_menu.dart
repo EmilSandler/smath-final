@@ -1,6 +1,9 @@
 
 
 
+import 'dart:html';
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -15,6 +18,7 @@ class LevelMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
+    MediaQueryData queryData =  MediaQuery.of(context);
 
     return Scaffold(
       body: Container(
@@ -45,11 +49,18 @@ class LevelMenu extends StatelessWidget {
                     )
                 ),
               ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
               SizedBox(
                 width: MediaQuery.of(context).size.width / 6,
                 child: ElevatedButton(
                   style: ButtonStyle(
-                    overlayColor: MaterialStateProperty.all(Colors.red),
+                      shape: MaterialStateProperty.all(CircleBorder()),
+                      backgroundColor: MaterialStateProperty.all(Colors.transparent),
+                      overlayColor: MaterialStateProperty.all(Color.fromARGB(50, 0, 0, 255)),
+                      padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(50)),
+                      elevation: MaterialStateProperty.all<double>(50)
                   ),
                   onPressed: () {
                     // Push and replace current screen (i.e MainMenu) with
@@ -60,14 +71,21 @@ class LevelMenu extends StatelessWidget {
                       ),
                     );
                   },
-                  child: Text('Level 1'),
+                  child: Tooltip(
+                      message: 'UP TO 10',
+                      child: Text('EASY', style: TextStyle(fontSize: width * 0.015))
+                  ),
                 ),
               ),
               SizedBox(
                 width: MediaQuery.of(context).size.width / 6,
                 child: ElevatedButton(
                   style: ButtonStyle(
-                    overlayColor: MaterialStateProperty.all(Colors.red),
+                      shape: MaterialStateProperty.all(CircleBorder()),
+                      backgroundColor: MaterialStateProperty.all(Colors.transparent),
+                      overlayColor: MaterialStateProperty.all(Color.fromARGB(50, 0, 0, 255)),
+                      padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(50)),
+                      elevation: MaterialStateProperty.all<double>(50)
                   ),
                   onPressed: () {
                     // Push and replace current screen (i.e MainMenu) with
@@ -78,14 +96,21 @@ class LevelMenu extends StatelessWidget {
                       ),
                     );
                   },
-                  child: Text('Level 2'),
+                  child: Tooltip(
+                      message: 'UP TO 20',
+                      child: Text('MEDIUM', style: TextStyle(fontSize: width * 0.015))
+                  ),
                 ),
               ),
               SizedBox(
                 width: MediaQuery.of(context).size.width / 6,
                 child: ElevatedButton(
                   style: ButtonStyle(
-                    overlayColor: MaterialStateProperty.all(Colors.red),
+                      shape: MaterialStateProperty.all(CircleBorder()),
+                      backgroundColor: MaterialStateProperty.all(Colors.transparent),
+                      overlayColor: MaterialStateProperty.all(Color.fromARGB(50, 0, 0, 255)),
+                      padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(50)),
+                      elevation: MaterialStateProperty.all<double>(50)
                   ),
                   onPressed: () {
                     // Push and replace current screen (i.e MainMenu) with
@@ -96,8 +121,13 @@ class LevelMenu extends StatelessWidget {
                       ),
                     );
                   },
-                  child: Text('Level 3'),
+                  child: Tooltip(
+                      message: 'UP TO 30',
+                      child: Text('HARD', style: TextStyle(fontSize: width * 0.015))
+                  ),
                 ),
+              ),
+                  ],
               ),
             ],
           ),
