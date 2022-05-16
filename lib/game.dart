@@ -62,7 +62,9 @@ class _GamePageState extends State<GamePage> {
 
   void draw()  {
     if (positions.length == 0) {
-      positions.add(getRandomPositionWithinRange());
+      positions.add(Offset(roundToNearestTens(((upperBoundX + lowerBoundX) / 2.0 - step).round().toInt()).toDouble(),
+                           roundToNearestTens(((upperBoundY + lowerBoundY) / 2.0 - step).round().toInt()).toDouble()));
+      // positions.add(getRandomPositionWithinRange());
     }
 
     while (length > positions.length) {
@@ -97,16 +99,18 @@ class _GamePageState extends State<GamePage> {
   }
 
   Offset getRandomPositionWithinRange() {
-    int posX = Random().nextInt(upperBoundX) + lowerBoundX;
-    int posY = Random().nextInt(upperBoundY) + lowerBoundY;
+    int posX = Random().nextInt(upperBoundX) + lowerBoundX - step;
+    int posY = Random().nextInt(upperBoundY) + lowerBoundY - step;
     return Offset(roundToNearestTens(posX).toDouble(), roundToNearestTens(posY).toDouble());
   }
 
   List<Offset> getRandomPositionWithinRangeV2() {
     List<Offset> temp = [];
     while (temp.length < 3) {
-      int posX = Random().nextInt(upperBoundX) + lowerBoundX;
-      int posY = Random().nextInt(upperBoundY) + lowerBoundY;
+      int posX = Random().nextInt(upperBoundX) + lowerBoundX - step;
+      if (posX < lowerBoundX) { posX = lowerBoundX; }
+      int posY = Random().nextInt(upperBoundY) + lowerBoundY - step;
+      if (posY < lowerBoundY) { posY = lowerBoundY; }
       if (isFoodPositionValid(temp, roundToNearestTens(posX).toDouble(), roundToNearestTens(posY).toDouble())) {
         temp.add(Offset(roundToNearestTens(posX).toDouble(), roundToNearestTens(posY).toDouble()));
       }
@@ -118,6 +122,11 @@ class _GamePageState extends State<GamePage> {
     for (Offset position in positions) {
       if (position.dx == posX && position.dy == posY) {
         return false;
+      }
+      for (Offset position in this.positions) {
+        if (position.dx == posX && position.dy == posY) {
+          return false;
+        }
       }
     }
     return true;
