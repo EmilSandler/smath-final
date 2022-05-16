@@ -103,17 +103,24 @@ class _GamePageState extends State<GamePage> {
   }
 
   List<Offset> getRandomPositionWithinRangeV2() {
-    int posX = Random().nextInt(upperBoundX) + lowerBoundX;
-    int posY = Random().nextInt(upperBoundY) + lowerBoundY;
     List<Offset> temp = [];
-    temp.add(Offset(roundToNearestTens(posX).toDouble(), roundToNearestTens(posY).toDouble()));
-    posX = Random().nextInt(upperBoundX) + lowerBoundX;
-    posY = Random().nextInt(upperBoundY) + lowerBoundY;
-    temp.add(Offset(roundToNearestTens(posX).toDouble(), roundToNearestTens(posY).toDouble()));
-    posX = Random().nextInt(upperBoundX) + lowerBoundX;
-    posY = Random().nextInt(upperBoundY) + lowerBoundY;
-    temp.add(Offset(roundToNearestTens(posX).toDouble(), roundToNearestTens(posY).toDouble()));
+    while (temp.length < 3) {
+      int posX = Random().nextInt(upperBoundX) + lowerBoundX;
+      int posY = Random().nextInt(upperBoundY) + lowerBoundY;
+      if (isFoodPositionValid(temp, roundToNearestTens(posX).toDouble(), roundToNearestTens(posY).toDouble())) {
+        temp.add(Offset(roundToNearestTens(posX).toDouble(), roundToNearestTens(posY).toDouble()));
+      }
+    }
     return temp;
+  }
+
+  bool isFoodPositionValid(List<Offset> positions, double posX, double posY) {
+    for (Offset position in positions) {
+      if (position.dx == posX && position.dy == posY) {
+        return false;
+      }
+    }
+    return true;
   }
 
   bool detectCollision(Offset position) {
@@ -212,12 +219,24 @@ class _GamePageState extends State<GamePage> {
     List<Problem> tempProblems = [];
 
     for (int i = 0; i < foodsPosition.length; i++) {
-      tempProblems.add(Problem(widget.type).generateProblem((widget.level)));
+      Problem newProblem = Problem(widget.type).generateProblem((widget.level));
+      while (!isProblemValid(tempProblems, newProblem)) {
+        newProblem = Problem(widget.type).generateProblem((widget.level));
+      }
+      tempProblems.add(newProblem);
     }
     return tempProblems;
   }
 
-
+  bool isProblemValid(List<Problem> problems, Problem newProblem) {
+    for (Problem problem in problems) {
+      if ((problem.type == 'add' && problem.x + problem.y == newProblem.x + newProblem.y) ||
+          (problem.type == 'mult' && problem.x * problem.y == newProblem.x * newProblem.y)) {
+        return false;
+      }
+    }
+    return true;
+  }
   bool isAnswerCorrect(Piece foodPiece){
     if(widget.type == 'add'){
       if(foodPiece.problem.x + foodPiece.problem.y == problems[0].x + problems[0].y){
