@@ -474,6 +474,10 @@ class _GamePageState extends State<GamePage> {
     direction = getRandomDirection();
     speed = 1;
     changeSpeed();
+    if (isGameOver) {
+      foodsPosition = [];
+      getPieces();
+    }
     isGameOver = false;
   }
 
