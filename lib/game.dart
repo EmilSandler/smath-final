@@ -148,12 +148,14 @@ class _GamePageState extends State<GamePage> {
   }
 
   void showGameOverDialog() {
+    double width = MediaQuery.of(context).size.width;
+
     showDialog(
       barrierDismissible: false,
       context: context,
       builder: (ctx) {
         return AlertDialog(
-          backgroundColor: Colors.black12.withOpacity(0.01),
+          backgroundColor: Colors.black.withOpacity(0.01),
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(10.0))
           ),
@@ -163,30 +165,34 @@ class _GamePageState extends State<GamePage> {
             style: TextStyle(
                 color: Colors.deepOrangeAccent,
                 fontFamily: 'SnakeFont',
-                fontSize: 100,
+                fontSize: width * 0.1,
                 letterSpacing: 4),
           ),
-          // content: Text(
-          //   "\n Your game is over but you played well ! \n Your score is " + score.toString(),
-          //   textAlign: TextAlign.center,
-          //   style: TextStyle(color: Colors.white,
-          //   fontSize: 30),
-          // ),
+          content: RichText(
+            textAlign: TextAlign.center,
+            text: TextSpan(
+              style: TextStyle(color: Colors.white70,
+                fontSize: width * 0.03, fontWeight: FontWeight.bold),
+              children: <TextSpan>[
+                TextSpan(text: 'Score'),
+                TextSpan(text: '\n'+score.toString(), style: TextStyle(
+                  fontSize: width * 0.05, fontFamily: 'SnakeFont')
+                )
+              ],
+            ),
+          ),
           actions: [
-            FlatButton(
+            IconButton(
               onPressed: () async {
                 Navigator.of(context).pop();
                 restart();
               },
-              child: Text(
-                "Restart",
-                style: TextStyle(
-                    color: Colors.deepOrangeAccent,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 30),
-              ),
+              icon: Icon(Icons.restart_alt_sharp),
+              iconSize: width * 0.04,
+              hoverColor: Colors.white10,
+              color: Colors.deepOrangeAccent,
             ),
-            FlatButton(
+            IconButton(
               onPressed: () async {
                 Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
@@ -194,13 +200,10 @@ class _GamePageState extends State<GamePage> {
                 ),
                 );
               },
-              child: Text(
-                "Main Menu",
-                style: TextStyle(
-                    color: Colors.deepOrangeAccent,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 30),
-              ),
+              icon: Icon(Icons.home),
+              iconSize: width * 0.04,
+              hoverColor: Colors.white10,
+              color: Colors.deepOrangeAccent,
             ),
           ],
         );
@@ -387,10 +390,10 @@ class _GamePageState extends State<GamePage> {
     print (1);
     return Positioned(
 
-      left: screenWidth / 2 - 100 ,
+      left: screenWidth / 2 - 140 ,
       child: Container (
-        width: 250,
-        height: 100,
+        width: 280,
+        height: 130,
         alignment: AlignmentDirectional.topCenter,
         decoration: BoxDecoration(
             image: DecorationImage(
@@ -402,15 +405,11 @@ class _GamePageState extends State<GamePage> {
           children: <Widget>[
             // Stroked text as border.
             Container(
-              margin: EdgeInsets.only(top: 10),
+              margin: EdgeInsets.only(top: 17),
               child: Text(
                 score.toString(),
                 style: TextStyle (
                   fontSize: 50,
-                  // foreground: Paint()
-                  //   ..style = PaintingStyle.stroke
-                  //   ..strokeWidth = 2
-                  //   ..color = Colors.white,
                   color: Colors.black54,
                   fontFamily: 'SnakeFont'
                 ),
