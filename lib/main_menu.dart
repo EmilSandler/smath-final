@@ -37,11 +37,17 @@ class MainMenu extends StatelessWidget {
                     )
                 ),
               ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children:[
               SizedBox(
-                width: MediaQuery.of(context).size.width / 6,
+                width: MediaQuery.of(context).size.width / 4,
                 child: ElevatedButton(
                   style: ButtonStyle(
-                    overlayColor: MaterialStateProperty.all(Colors.red),
+                      overlayColor: MaterialStateProperty.all(Colors.red),
+                      shape: MaterialStateProperty.all(CircleBorder(),),
+                      padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(10)),
+                      elevation: MaterialStateProperty.all<double>(50)
                   ),
                   onPressed: () {
                     // Push and replace current screen (i.e MainMenu) with
@@ -52,14 +58,19 @@ class MainMenu extends StatelessWidget {
                       ),
                     );
                   },
-                  child: Text('Play Addition'),
+                  child: Text('+',
+                      style: TextStyle(fontSize: 60)
+                  ),
                 ),
               ),
               SizedBox(
-                width: MediaQuery.of(context).size.width / 6,
+                width: MediaQuery.of(context).size.width / 4,
                 child: ElevatedButton(
                   style: ButtonStyle(
-                    overlayColor: MaterialStateProperty.all(Colors.red),
+                      overlayColor: MaterialStateProperty.all(Colors.red),
+                      shape: MaterialStateProperty.all(CircleBorder(),),
+                      padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(10)),
+                      elevation: MaterialStateProperty.all<double>(50)
                   ),
                   onPressed: () {
                     // Push and replace current screen (i.e MainMenu) with
@@ -70,14 +81,17 @@ class MainMenu extends StatelessWidget {
                       ),
                     );
                   },
-                  child: Text('Play Multiplication'),
+                  child: Text('X',
+                      style: TextStyle(fontSize: 60)
+                  ),
                 ),
               ),
             ],
           ),
+        ],
         ),
       ),
-    );
+    ));
   }
 
 }
