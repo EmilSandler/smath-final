@@ -3,11 +3,10 @@ import 'package:flutter/material.dart';
 import 'level_menu.dart';
 
 class MainMenu extends StatelessWidget {
-
-
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -20,58 +19,78 @@ class MainMenu extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Padding(padding: EdgeInsets.symmetric(vertical: 50.0),
-                child: Text(
-                    'S-Math',
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 20.0),
+                child: RichText(
+                  textAlign: TextAlign.center,
+                  text: TextSpan(
                     style: TextStyle(
-                      fontFamily: 'SnakeFont',
-                      fontSize: width * 0.1,
-                      color: Colors.deepOrangeAccent,
-                      shadows: [
-                        Shadow(
-                          blurRadius: 20.0,
-                          color: Colors.white,
-                          offset: Offset(0, 0),
-                        )
-                      ],
-                    )
+                      fontFamily: 'TheBite',
+                      fontSize: width * 0.04,
+                      color: Colors.black54,
+                    ),
+                    children: <TextSpan>[
+                      TextSpan(
+                          text: 'S-math',
+                          style: TextStyle(
+                              fontSize: width * 0.1, fontFamily: 'SnakeFont', color: Colors.deepOrangeAccent)),
+                      TextSpan(text: '\n Choose Your Game')
+                    ],
+                  ),
                 ),
               ),
-              SizedBox(
-                width: MediaQuery.of(context).size.width / 6,
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                    overlayColor: MaterialStateProperty.all(Colors.red),
+              Stack(
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.only(bottom: height/8),
                   ),
-                  onPressed: () {
-                    // Push and replace current screen (i.e MainMenu) with
-                    // SelectSpaceship(), so that player can select a spaceship.
-                    Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(
-                        builder: (context) => LevelMenu('add'),
-                      ),
-                    );
-                  },
-                  child: Text('Play Addition'),
-                ),
-              ),
-              SizedBox(
-                width: MediaQuery.of(context).size.width / 6,
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                    overlayColor: MaterialStateProperty.all(Colors.red),
-                  ),
-                  onPressed: () {
-                    // Push and replace current screen (i.e MainMenu) with
-                    // SelectSpaceship(), so that player can select a spaceship.
-                    Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(
-                        builder: (context) => LevelMenu('mult'),
-                      ),
-                    );
-                  },
-                  child: Text('Play Multiplication'),
-                ),
+                  Positioned(
+                      left: width /2.7, // need to fix responsive?
+                      child: Row(
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.only(left: 50.0, right: 50.0),
+                            child: CircleAvatar(
+                              radius: width * 0.03,
+                              backgroundColor: Colors.deepOrangeAccent,
+                              child: IconButton(
+                                onPressed: () {
+                                  Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                      builder: (context) => LevelMenu('add'),
+                                    ),
+                                  );
+                                },
+                                icon: Icon(Icons.add),
+                                iconSize: width * 0.04,
+                                hoverColor: Colors.black,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+                            child: CircleAvatar(
+                              radius: width * 0.03,
+                              backgroundColor: Colors.deepOrangeAccent,
+                              child: IconButton(
+                                onPressed: () {
+                                  Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                      builder: (context) => LevelMenu('mult'),
+                                    ),
+                                  );
+                                },
+                                icon: Icon(Icons.close_sharp),
+                                iconSize: width * 0.04,
+                                hoverColor: Colors.black,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ))
+                ],
               ),
             ],
           ),
@@ -79,5 +98,4 @@ class MainMenu extends StatelessWidget {
       ),
     );
   }
-
 }

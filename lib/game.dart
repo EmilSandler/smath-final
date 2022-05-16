@@ -389,7 +389,6 @@ class _GamePageState extends State<GamePage> {
   Widget getScore(double screenWidth, double screenHeight) {
     print (1);
     return Positioned(
-
       left: screenWidth / 2 - 140 ,
       child: Container (
         width: 280,
