@@ -153,21 +153,25 @@ class _GamePageState extends State<GamePage> {
       context: context,
       builder: (ctx) {
         return AlertDialog(
-          backgroundColor: Colors.red,
+          backgroundColor: Colors.black12.withOpacity(0.01),
           shape: RoundedRectangleBorder(
-              side: BorderSide(
-                color: Colors.black,
-                width: 3.0,
-              ),
-              borderRadius: BorderRadius.all(Radius.circular(10.0))),
+              borderRadius: BorderRadius.all(Radius.circular(10.0))
+          ),
           title: Text(
             "Game Over",
-            style: TextStyle(color: Colors.white),
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                color: Colors.deepOrangeAccent,
+                fontFamily: 'SnakeFont',
+                fontSize: 100,
+                letterSpacing: 4),
           ),
-          content: Text(
-            "Your game is over but you played well. Your score is " + score.toString() + ".",
-            style: TextStyle(color: Colors.white),
-          ),
+          // content: Text(
+          //   "\n Your game is over but you played well ! \n Your score is " + score.toString(),
+          //   textAlign: TextAlign.center,
+          //   style: TextStyle(color: Colors.white,
+          //   fontSize: 30),
+          // ),
           actions: [
             FlatButton(
               onPressed: () async {
@@ -176,7 +180,10 @@ class _GamePageState extends State<GamePage> {
               },
               child: Text(
                 "Restart",
-                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    color: Colors.deepOrangeAccent,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 30),
               ),
             ),
             FlatButton(
@@ -189,7 +196,10 @@ class _GamePageState extends State<GamePage> {
               },
               child: Text(
                 "Main Menu",
-                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    color: Colors.deepOrangeAccent,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 30),
               ),
             ),
           ],
@@ -379,15 +389,15 @@ class _GamePageState extends State<GamePage> {
 
       left: screenWidth / 2 - 100 ,
       child: Container (
-        width: 150,
+        width: 250,
         height: 100,
         alignment: AlignmentDirectional.topCenter,
-        // decoration: BoxDecoration(
-        //     image: DecorationImage(
-        //       image: AssetImage('assets/images/scoreBoard1.png'),
-        //       fit: BoxFit.fill,
-        //     )
-        // ),
+        decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/images/scoreBoard.png'),
+              fit: BoxFit.cover,
+            )
+        ),
         child: Stack(
           children: <Widget>[
             // Stroked text as border.
@@ -401,7 +411,8 @@ class _GamePageState extends State<GamePage> {
                   //   ..style = PaintingStyle.stroke
                   //   ..strokeWidth = 2
                   //   ..color = Colors.white,
-                  color: Colors.white,
+                  color: Colors.black54,
+                  fontFamily: 'SnakeFont'
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -447,7 +458,7 @@ class _GamePageState extends State<GamePage> {
             getProblemStringByType(),
             style: TextStyle(
               fontSize: width * 0.1,
-              color: Colors.grey[50].withOpacity(0.3),
+              color: Colors.black45.withOpacity(0.3),
             ),
           ),
         ],
@@ -602,7 +613,7 @@ class _GamePageState extends State<GamePage> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/images/background.jpg'),
+            image: AssetImage('assets/images/background.png'),
             fit: BoxFit.cover,
           )
         ),
