@@ -305,7 +305,13 @@ class _GamePageState extends State<GamePage> {
          _soundManager.playWrongAnswerSound();
          shadowColor = getShadowColor();
          changeColor = false;
-         //length--;
+         length--;
+         if (length < 2) {
+           _soundManager.stopBackgroundMusic();
+           if (timer != null && timer.isActive) timer.cancel();
+           Future.delayed(Duration(milliseconds: 200), () => showGameOverDialog());
+           isGameOver = true;
+         }
         }
         foodsPosition = getRandomPositionWithinRangeV2();
         problems = generateNewProblems();
@@ -424,6 +430,10 @@ class _GamePageState extends State<GamePage> {
   }
 
   String getProblemStringByType(){
+    if (problems.length <= 0) {
+      return '';
+    }
+
     int x,y;
 
     if(problems[0].x > problems[0].y){
@@ -622,6 +632,7 @@ class _GamePageState extends State<GamePage> {
         child: Stack(
           children: [
             getPlayAreaBorder(),
+            getProblem(),
             Container(
               child: Stack(
                 children: getPieces(),
@@ -634,7 +645,6 @@ class _GamePageState extends State<GamePage> {
             confetti(Alignment.centerLeft ,0),
             //getControls(),
             getScore(screenWidth, screenHeight),
-            getProblem(),
             getKeyboardControls(context)
           ],
         ),

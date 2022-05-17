@@ -97,19 +97,13 @@ class _PieceState extends State<Piece> with SingleTickerProviderStateMixin {
                 scale: 1 / widget.size
             ),
           ),
-          child: Stack(
-          children: [
+          child:
           Text("${widget.getSum()}", textAlign: TextAlign.center, softWrap: true,style: TextStyle(
-            fontSize: 30,
-            color: Color.fromARGB(255, 222, 188, 65),
-            fontFamily: 'TheBite',
-          ),),
-          Text("${widget.getSum()}", textAlign: TextAlign.center, softWrap: true,style: TextStyle(
-            fontSize: 25,
+            fontSize: widget.getSum().length > 2 ? 20 : 30,
             color: Colors.black,
-            fontFamily: 'TheBite',
-            ),),
-          ]),
+            fontWeight: FontWeight.bold
+          ),
+          ),
       ),
     )
     );
