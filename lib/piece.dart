@@ -98,12 +98,14 @@ class _PieceState extends State<Piece> with SingleTickerProviderStateMixin {
             ),
           ),
           child:
-          Text("${widget.getSum()}", textAlign: TextAlign.center, softWrap: true,style: TextStyle(
+              Center(
+          child: Text("${widget.getSum()}", textAlign: TextAlign.justify, softWrap: true, style: TextStyle(
             fontSize: widget.getSum().length > 2 ? 20 : 30,
             color: Colors.black,
             fontWeight: FontWeight.bold
           ),
           ),
+              ),
       ),
     )
     );
