@@ -45,7 +45,7 @@ class MainMenu extends StatelessWidget {
                     margin: EdgeInsets.only(bottom: height/8),
                   ),
                   Positioned(
-                      left: width /2.7, // need to fix responsive?
+                      left: width /2.5, // need to fix responsive?
                       child: Row(
                         children: <Widget>[
                           Padding(
@@ -69,7 +69,7 @@ class MainMenu extends StatelessWidget {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+                            padding: const EdgeInsets.only(left: 50.0, right: 50.0),
                             child: CircleAvatar(
                               radius: width * 0.03,
                               backgroundColor: Colors.deepOrangeAccent,

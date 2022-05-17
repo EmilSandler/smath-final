@@ -77,7 +77,8 @@ class LevelMenu extends StatelessWidget {
                           ),
                         );
                       },
-                      child: Text('Level 1 ', style: TextStyle(
+                      child: Text('Easy', style: TextStyle(
+                        fontSize: 30,
                         fontWeight: FontWeight.bold,
                       )),
                     ),
@@ -97,7 +98,8 @@ class LevelMenu extends StatelessWidget {
                           ),
                         );
                       },
-                      child: Text('Level 2', style: TextStyle(
+                      child: Text('Medium', style: TextStyle(
+                          fontSize: 30,
                           fontWeight: FontWeight.bold)),
                     ),
                   ),
@@ -116,7 +118,8 @@ class LevelMenu extends StatelessWidget {
                           ),
                         );
                       },
-                      child: Text('Level 3', style: TextStyle(
+                      child: Text('Hard', style: TextStyle(
+                          fontSize: 30,
                           fontWeight: FontWeight.bold
                       )),
                     ),
